@@ -1,4 +1,4 @@
-API.Plugins.callbacks = {
+Engine.Plugins.callbacks = {
 	element:{
 		table:{
 			index:{},
@@ -38,12 +38,12 @@ API.Plugins.callbacks = {
 		},
 	},
 	init:function(){
-		API.GUI.Sidebar.Nav.add('Callbacks', 'main_navigation');
+		Engine.GUI.Sidebar.Nav.add('Callbacks', 'main_navigation');
 	},
 	load:{
 		index:function(){
-			API.Builder.card($('#pagecontent'),{ title: 'Callbacks', icon: 'callbacks'}, function(card){
-				API.request('calls','read',{
+			Engine.Builder.card($('#pagecontent'),{ title: 'Callbacks', icon: 'callbacks'}, function(card){
+				Engine.request('calls','read',{
 					data:{
 						options:{
 							link_to:'CallbacksIndex',
@@ -57,9 +57,9 @@ API.Plugins.callbacks = {
 				},function(result) {
 					var dataset = JSON.parse(result);
 					if(dataset.success != undefined){
-						for(const [key, value] of Object.entries(dataset.output.dom)){ API.Helper.set(API.Contents,['data','dom','callbacks',value.id],value); }
-						for(const [key, value] of Object.entries(dataset.output.raw)){ API.Helper.set(API.Contents,['data','raw','callbacks',value.id],value); }
-						API.Builder.table(card.children('.card-body'), dataset.output.dom, {
+						for(const [key, value] of Object.entries(dataset.output.dom)){ Engine.Helper.set(Engine.Contents,['data','dom','callbacks',value.id],value); }
+						for(const [key, value] of Object.entries(dataset.output.raw)){ Engine.Helper.set(Engine.Contents,['data','raw','callbacks',value.id],value); }
+						Engine.Builder.table(card.children('.card-body'), dataset.output.dom, {
 							headers:dataset.output.headers,
 							id:'CallbacksIndex',
 							modal:true,
@@ -72,7 +72,7 @@ API.Plugins.callbacks = {
 							import:{ key:'id', },
 							clickable:{ enable:true, plugin:'calls', view:'details'},
 						},function(response){
-							API.Plugins.callbacks.element.table.index = response.table;
+							Engine.Plugins.callbacks.element.table.index = response.table;
 						});
 					}
 				});
@@ -89,7 +89,7 @@ API.Plugins.callbacks = {
 							clearInterval(checkExist);
 							var id = $('span[data-plugin="clients"][data-key="id"]').text();
 							var name = $('span[data-plugin="clients"][data-key="name"]').text();
-							API.request('calls','read',{
+							Engine.request('calls','read',{
 								data:{filters:[
 									{ relationship:'equal', name:'client', value:id},
 									{ relationship:'smaller', name:'status', value:3},
@@ -99,10 +99,10 @@ API.Plugins.callbacks = {
 							},function(result){
 								var dataset = JSON.parse(result), callbacks = [];
 								if(typeof dataset.success !== 'undefined'){
-									for(const [key, value] of Object.entries(dataset.output.dom)){ API.Helper.set(API.Contents,['data','dom','callbacks',value.id],value); }
-									for(const [key, value] of Object.entries(dataset.output.raw)){ API.Helper.set(API.Contents,['data','raw','callbacks',value.id],value); }
-									API.Plugins.clients.Tabs.add('callbacks', function(tab){
-										API.Builder.table(tab, dataset.output.dom, {
+									for(const [key, value] of Object.entries(dataset.output.dom)){ Engine.Helper.set(Engine.Contents,['data','dom','callbacks',value.id],value); }
+									for(const [key, value] of Object.entries(dataset.output.raw)){ Engine.Helper.set(Engine.Contents,['data','raw','callbacks',value.id],value); }
+									Engine.Plugins.clients.Tabs.add('callbacks', function(tab){
+										Engine.Builder.table(tab, dataset.output.dom, {
 											headers:dataset.output.headers,
 											id:'ClientsCallbacks',
 											modal:true,
@@ -110,7 +110,7 @@ API.Plugins.callbacks = {
 											set:{
 												client:name,
 												status:1,
-												assigned_to:API.Contents.Auth.User.id,
+												assigned_to:Engine.Contents.Auth.User.id,
 											},
 											plugin:'calls',
 											clickable:{
@@ -131,7 +131,7 @@ API.Plugins.callbacks = {
 											},
 											modalWidth:'modal-lg',
 										},function(table){
-											API.Plugins.callbacks.element.table.clients.callbacks = table.table;
+											Engine.Plugins.callbacks.element.table.clients.callbacks = table.table;
 										});
 									});
 								}
@@ -144,4 +144,4 @@ API.Plugins.callbacks = {
 	},
 }
 
-API.Plugins.callbacks.init();
+Engine.Plugins.callbacks.init();
