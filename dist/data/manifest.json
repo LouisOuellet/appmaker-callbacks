@@ -1,7 +1,7 @@
 {
     "repository": {
         "name": "appmaker-callbacks",
-        "branch": "pre-release",
+        "branch": "dev",
         "manifest": "\/dist\/data\/manifest.json",
         "host": {
             "git": "https:\/\/github.com\/LouisOuellet\/",
@@ -9,6 +9,6 @@
         }
     },
     "name": "callbacks",
-    "build": 87,
-    "version": "22.05-pre-release"
+    "build": 88,
+    "version": "22.05-dev"
 }
